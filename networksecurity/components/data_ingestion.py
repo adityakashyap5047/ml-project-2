@@ -93,7 +93,7 @@ class DataIngestion:
 
     def initiate_data_ingestion(self):
         try:
-            dataframe = self.export_collection_as_dataframe
+            dataframe = self.export_collection_as_dataframe()
             dataframe = self.export_data_into_feature_store(dataframe)
 
             self.split_data_as_train_test(dataframe)

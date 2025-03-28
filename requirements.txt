@@ -6,4 +6,5 @@ certifi
 dotenv
 scikit-learn
 pyaml
+mlflow
 # -e .

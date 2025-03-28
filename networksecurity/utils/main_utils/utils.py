@@ -8,6 +8,9 @@ import sys
 import numpy as np
 import pickle
 
+from sklearn.model_selection import GridSearchCV
+from sklearn.metrics import r2_score
+
 def read_yaml_file(file_path: str) -> dict:
     try:
         with open(file_path, "rb") as yaml_file:
@@ -71,3 +74,28 @@ def load_object(file_path: str) -> object:
             return pickle.load(file_obj)
     except Exception as e:
         raise NetworkSecurityException(e, sys) from e
+    
+def evaluate_models(X_train, y_train, X_test, y_test, models, params):
+    try:
+        report = {}
+
+        for i in range(len(list(models))):
+            model = list(models.values())[i]
+            para = params[list(models.keys())[i]]
+
+            gs = GridSearchCV(model, para, cv=3)
+            gs.fit(X_train, y_train)
+
+            model.set_params(**gs.best_params_)
+            model.fit(X_train, y_train)
+
+            y_pred = model.predict(X_test)
+
+            model_score = r2_score(y_test, y_pred)
+
+            report[list(models.keys())[i]] = model_score
+        
+        return report
+    
+    except Exception as e:
+        raise NetworkSecurityException(e, sys)

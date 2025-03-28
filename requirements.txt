@@ -7,4 +7,5 @@ dotenv
 scikit-learn
 pyaml
 mlflow
+dagshub
 # -e .

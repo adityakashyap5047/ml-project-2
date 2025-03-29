@@ -178,3 +178,6 @@ Artifacts/
 
 # ML Flow
 mlruns/
+
+# Final Model
+final_model/
